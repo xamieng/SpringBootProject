@@ -18,3 +18,8 @@ docker-compose up
 ```
 gradle test
 ```
+
+### 5. DOCUMENT
+```
+http://localhost:8080/swagger-ui.html#/
+```
