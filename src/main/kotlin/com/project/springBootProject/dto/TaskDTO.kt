@@ -4,7 +4,7 @@ import com.project.springBootProject.enum.TaskStatus
 import org.jetbrains.annotations.NotNull
 
 class TaskDTO {
-    var id: String? = null
+    var id: Int? = null
     @NotNull
     var subject: String? = null
     var detail: String? = null
