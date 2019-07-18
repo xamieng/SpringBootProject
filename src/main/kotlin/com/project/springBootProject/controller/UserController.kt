@@ -4,8 +4,10 @@ import com.project.springBootProject.assembler.UserAssembler
 import com.project.springBootProject.dto.UserDTO
 import com.project.springBootProject.service.UserService
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -39,5 +41,13 @@ class UserController(
         val user = userService.getUserById(id) ?: throw IllegalStateException("User must not be null")
         val result = userAssembler.assembleDTO(user)
         return ResponseEntity.ok(result)
+    }
+
+    @DeleteMapping(value="/{id}")
+    @Transactional(readOnly = true)
+    fun deleteUser(@PathVariable id: Int): ResponseEntity<HttpStatus> {
+        logger.info("REST request to get user: id=$id")
+        val user = userService.deleteUserById(id)
+        return ResponseEntity.ok(HttpStatus.OK)
     }
 }

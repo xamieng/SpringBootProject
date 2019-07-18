@@ -26,4 +26,10 @@ class UserService (
         return userRepository.findOneById(id)
     }
 
+    fun deleteUserById(id: Int) {
+        logger.debug("getUserById: $id")
+        val user = getUserById(id) ?: throw IllegalArgumentException("User is not exist.")
+        return userRepository.delete(user)
+    }
+
 }
