@@ -4,11 +4,12 @@ import com.project.springBootProject.domain.User
 import com.project.springBootProject.dto.UserDTO
 import com.project.springBootProject.service.UserService
 import org.springframework.stereotype.Component
+import javax.inject.Inject
 
 @Component
-class UserAssembler(
-        private val userService: UserService
-) {
+class UserAssembler {
+    @Inject private lateinit var userService: UserService
+
     fun assembleDomain(dto: UserDTO): User {
         val domain = User()
         domain.firstName = dto.firstName

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -34,7 +35,17 @@ class UserController(
         return ResponseEntity.ok(result)
     }
 
-    @GetMapping(value="/{id}")
+    @PutMapping("/{id}")
+    @Transactional(readOnly = true)
+    fun updateUser(@RequestBody dto: UserDTO, @PathVariable id: Int): ResponseEntity<UserDTO> {
+        logger.info("REST request to create user: $dto")
+        val domain = userService.getUserById(id) ?: throw IllegalArgumentException("User is not exist.")
+        val result = userService.updateUser(dto, domain)
+        return ResponseEntity.ok(userAssembler.assembleDTO(result))
+    }
+
+
+    @GetMapping("/{id}")
     @Transactional(readOnly = true)
     fun getUser(@PathVariable id: Int): ResponseEntity<UserDTO> {
         logger.info("REST request to get user: id=$id")
@@ -43,7 +54,7 @@ class UserController(
         return ResponseEntity.ok(result)
     }
 
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping("/{id}")
     @Transactional(readOnly = true)
     fun deleteUser(@PathVariable id: Int): ResponseEntity<HttpStatus> {
         logger.info("REST request to get user: id=$id")

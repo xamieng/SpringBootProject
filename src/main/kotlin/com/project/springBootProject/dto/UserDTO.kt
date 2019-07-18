@@ -10,5 +10,5 @@ class UserDTO {
     var vacationLeaveQuota: Double? = null
     var sickLeaveQuota: Double? = null
     var personalLeaveQuota: Double? = null
-    var supervisorId: Int = 0
+    var supervisorId: Int? = null
 }
