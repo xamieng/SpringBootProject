@@ -32,20 +32,6 @@ class TaskController(
 
     private val logger = LoggerFactory.getLogger(TaskController::class.java)
 
-    @GetMapping
-    @Transactional(readOnly = true)
-    @ApiImplicitParams(
-            ApiImplicitParam(name = "sort", value = "Field to sort,{asc, desc}", defaultValue = "id,asc", paramType = "query", dataType = "string"),
-            ApiImplicitParam(name = "size", value = "Page Size", defaultValue = "100", paramType = "query", dataType = "int"),
-            ApiImplicitParam(name = "page", value = "Page number", defaultValue = "0", paramType = "query", dataType = "int")
-    )
-    fun getAllTask(@ApiIgnore pageable: Pageable): ResponseEntity<List<TaskDTO>> {
-        logger.info("REST request to get all task with pageable: $pageable")
-        val task = taskService.getAllTask(pageable)
-        val taskDTOs = task.content.map { taskAssembler.assembleDTO(it) }
-        return ResponseEntity.ok(taskDTOs)
-    }
-
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     fun getTaskById(@PathVariable id: String): ResponseEntity<TaskDTO> {

@@ -16,11 +16,6 @@ class TaskService (
 
     private val logger = LoggerFactory.getLogger(TaskService::class.java)
 
-    fun getAllTask(pageable: Pageable): Page<Task> {
-        logger.debug("getAllTask: $pageable")
-        return taskRepository.findAll(pageable)
-    }
-
     fun getTaskById(id: String): Task? {
         logger.debug("getTaskById: $id")
         return taskRepository.findOneById(id)

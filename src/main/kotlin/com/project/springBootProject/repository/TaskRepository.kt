@@ -1,8 +1,8 @@
 package com.project.springBootProject.repository
 
 import com.project.springBootProject.domain.Task
-import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.data.repository.CrudRepository
 
-interface TaskRepository : MongoRepository<Task, String> {
+interface TaskRepository : CrudRepository<Task, String> {
     fun findOneById(id: String): Task?
 }
