@@ -13,7 +13,7 @@ class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     var id: Int? = null
-    var firtName: String? = null
+    var firstName: String? = null
     var lastName: String? = null
     var role: UserRole? = null
     var vacationLeaveQuota: Double? = null

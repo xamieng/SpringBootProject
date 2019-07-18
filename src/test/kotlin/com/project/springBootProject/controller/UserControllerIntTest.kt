@@ -2,7 +2,7 @@ package com.project.springBootProject.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.project.springBootProject.SpringBootProjectApplication
-import com.project.springBootProject.dto.TaskDTO
+import com.project.springBootProject.dto.UserDTO
 import com.project.springBootProject.enum.LeaveStatus
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,7 +45,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, TaskDTO::class.java)
+        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, UserDTO::class.java)
 
         //get task
         val mvcGetResult = mvc.perform(get("/task/${createdResult.id}")
@@ -54,7 +54,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val getResult = mapper.readValue(mvcGetResult.response.contentAsString, TaskDTO::class.java)
+        val getResult = mapper.readValue(mvcGetResult.response.contentAsString, UserDTO::class.java)
 
         // assert
         assert(getResult.id == createdResult.id)
@@ -102,7 +102,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val result = mapper.readValue(mvcResult.response.contentAsString, TaskDTO::class.java)
+        val result = mapper.readValue(mvcResult.response.contentAsString, UserDTO::class.java)
 
         // assert
         assert(result.id != null)
@@ -123,7 +123,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, TaskDTO::class.java)
+        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, UserDTO::class.java)
 
         // update task
         val updatedSubject = "updatedSubject"
@@ -136,7 +136,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val updatedResult = mapper.readValue(mvcUpdateResult.response.contentAsString, TaskDTO::class.java)
+        val updatedResult = mapper.readValue(mvcUpdateResult.response.contentAsString, UserDTO::class.java)
 
         // assert
         assert(updatedResult.id == createdResult.id)
@@ -157,7 +157,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, TaskDTO::class.java)
+        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, UserDTO::class.java)
 
         // update task status
         val updatedStatus = LeaveStatus.DONE
@@ -170,7 +170,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val updatedResult = mapper.readValue(mvcUpdateResult.response.contentAsString, TaskDTO::class.java)
+        val updatedResult = mapper.readValue(mvcUpdateResult.response.contentAsString, UserDTO::class.java)
 
         assert(updatedResult.id == createdResult.id)
         assert(updatedResult.subject == createdResult.subject)
@@ -190,7 +190,7 @@ class UserControllerIntTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn()
 
-        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, TaskDTO::class.java)
+        val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, UserDTO::class.java)
 
         // delete task
         mvc.perform(delete("/task/${createdResult.id}")
@@ -207,8 +207,8 @@ class UserControllerIntTest {
                 .andReturn()
     }
 
-    private fun createDTO(): TaskDTO {
-        val dto = TaskDTO()
+    private fun createDTO(): UserDTO {
+        val dto = UserDTO()
         dto.subject = "subject" + UUID.randomUUID()
         dto.detail = "detail" + UUID.randomUUID()
         dto.status = LeaveStatus.PENDING
