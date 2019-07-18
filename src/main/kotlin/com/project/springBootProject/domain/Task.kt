@@ -2,7 +2,7 @@ package com.project.springBootProject.domain
 
 import com.project.springBootProject.enum.TaskStatus
 import org.jetbrains.annotations.NotNull
-import org.springframework.data.annotation.Id
+import javax.persistence.Id
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
