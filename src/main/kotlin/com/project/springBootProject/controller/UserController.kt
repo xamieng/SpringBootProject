@@ -24,8 +24,9 @@ class UserController(
     @Transactional(readOnly = true)
     fun createUser(@RequestBody dto: UserDTO): ResponseEntity<UserDTO> {
         logger.info("REST request to create user: $dto")
-        val user = userService.createUser(dto)
-        val taskDTO = UserDTO()
-        return ResponseEntity.ok(taskDTO)
+        val domain = userAssembler.assembleDomain(dto)
+        val user = userService.createUser(domain) ?: throw IllegalStateException("User must not be null")
+        val result = userAssembler.assembleDTO(user)
+        return ResponseEntity.ok(result)
     }
 }
