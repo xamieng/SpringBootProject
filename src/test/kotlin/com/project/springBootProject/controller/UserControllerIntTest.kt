@@ -25,7 +25,7 @@ import javax.inject.Inject
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = [SpringBootProjectApplication::class])
 @AutoConfigureMockMvc
-class TaskControllerIntTest {
+class UserControllerIntTest {
 
     @Inject private lateinit var mvc: MockMvc
 
