@@ -1,6 +1,7 @@
 package com.project.springBootProject.enum
 
-enum class TaskStatus {
+enum class LeaveStatus {
     PENDING,
-    DONE
+    ACCEPTED,
+    REJECTED
 }

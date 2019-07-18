@@ -25,8 +25,8 @@ class TaskController(
     @Transactional(readOnly = true)
     fun getTaskById(@PathVariable id: String): ResponseEntity<TaskDTO> {
         logger.info("REST request to get task by id: $id")
-        val task = taskService.getTaskById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        val taskDTO = taskAssembler.assembleDTO(task)
+//        val task = taskService.getTaskById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        val taskDTO = TaskDTO()
         return ResponseEntity.ok(taskDTO)
     }
 }

@@ -1,48 +1,22 @@
 package com.project.springBootProject.service
 
-import com.project.springBootProject.domain.Task
+import com.project.springBootProject.domain.User
 import com.project.springBootProject.dto.TaskDTO
-import com.project.springBootProject.enum.TaskStatus
-import com.project.springBootProject.repository.TaskRepository
+import com.project.springBootProject.enum.LeaveStatus
+import com.project.springBootProject.repository.UserRepository
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
 class TaskService (
-        private val taskRepository: TaskRepository
+        private val userRepository: UserRepository
 ) {
 
     private val logger = LoggerFactory.getLogger(TaskService::class.java)
 
-    fun getTaskById(id: String): Task? {
+    fun getTaskById(id: String): User? {
         logger.debug("getTaskById: $id")
-        return taskRepository.findOneById(id)
-    }
-
-    fun save(task: Task): Task {
-        logger.debug("save: $task")
-        return taskRepository.save(task)
-    }
-
-    fun update(task: Task, dto: TaskDTO): Task {
-        logger.debug("update: $task")
-        task.subject = dto.subject
-        task.detail = dto.detail
-        task.status = dto.status
-        return taskRepository.save(task)
-    }
-
-    fun updateStatus(task: Task, status: TaskStatus): Task {
-        logger.debug("updateStatus: $task")
-        task.status = status
-        return taskRepository.save(task)
-    }
-
-    fun delete(task: Task) {
-        logger.debug("delete: $task")
-        return taskRepository.delete(task)
+        return userRepository.findOneById(id)
     }
 
 }

@@ -3,7 +3,7 @@ package com.project.springBootProject.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.project.springBootProject.SpringBootProjectApplication
 import com.project.springBootProject.dto.TaskDTO
-import com.project.springBootProject.enum.TaskStatus
+import com.project.springBootProject.enum.LeaveStatus
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -160,7 +160,7 @@ class TaskControllerIntTest {
         val createdResult = mapper.readValue(mvcCreatedResult.response.contentAsString, TaskDTO::class.java)
 
         // update task status
-        val updatedStatus = TaskStatus.DONE
+        val updatedStatus = LeaveStatus.DONE
         createdResult.status = updatedStatus
 
         val mvcUpdateResult = mvc.perform(post("/task/${createdResult.id}")
@@ -211,7 +211,7 @@ class TaskControllerIntTest {
         val dto = TaskDTO()
         dto.subject = "subject" + UUID.randomUUID()
         dto.detail = "detail" + UUID.randomUUID()
-        dto.status = TaskStatus.PENDING
+        dto.status = LeaveStatus.PENDING
         return dto
     }
 }
