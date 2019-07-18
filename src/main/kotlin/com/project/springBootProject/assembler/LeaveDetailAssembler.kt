@@ -1,9 +1,7 @@
 package com.project.springBootProject.assembler
 
 import com.project.springBootProject.domain.LeaveDetail
-import com.project.springBootProject.dto.CreateLeaveDetailDTO
 import com.project.springBootProject.dto.LeaveDetailDTO
-import com.project.springBootProject.enum.LeaveStatus
 import com.project.springBootProject.service.UserService
 import org.springframework.stereotype.Component
 import javax.inject.Inject
@@ -17,14 +15,16 @@ class LeaveDetailAssembler {
     @Inject
     private lateinit var userAssembler: UserAssembler
 
-    fun assembleDomain(createDTO: CreateLeaveDetailDTO, newStatus: LeaveStatus): LeaveDetail {
+    fun assembleDomain(leaveDetailDTO: LeaveDetailDTO): LeaveDetail {
         return LeaveDetail().apply {
-            startDate = createDTO.startDate
-            endDate = createDTO.endDate
-            totalCount = createDTO.totalCount
-            comment = createDTO.comment
-            status = newStatus
-            createDTO.userId?.let { user = userService.getUserById(it) }
+            startDate = leaveDetailDTO.startDate
+            endDate = leaveDetailDTO.endDate
+            totalCount = leaveDetailDTO.totalCount
+            comment = leaveDetailDTO.comment
+            supervisorComment = leaveDetailDTO.supervisorComment
+            leaveType = leaveDetailDTO.leaveType
+            status = leaveDetailDTO.status
+            leaveDetailDTO.user?.let { user = userService.getUserById(it.id) }
         }
     }
 
@@ -34,8 +34,10 @@ class LeaveDetailAssembler {
         dto.startDate = domain.startDate
         dto.endDate = domain.endDate
         dto.status = domain.status
+        dto.leaveType = domain.leaveType
         dto.totalCount = domain.totalCount
         dto.comment = domain.comment
+        dto.supervisorComment = domain.supervisorComment
         domain.user?.let { dto.user = userAssembler.assembleDTO(it) }
         return dto
     }

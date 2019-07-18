@@ -2,6 +2,7 @@ package com.project.springBootProject.service
 
 import com.project.springBootProject.domain.User
 import com.project.springBootProject.dto.UserDTO
+import com.project.springBootProject.enum.LeaveType
 import com.project.springBootProject.repository.UserRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -35,6 +36,9 @@ class UserService (
         dto.lastName?.let {
             domain.lastName = dto.lastName
         }
+        dto.jobTitle?.let {
+            domain.jobTitle = dto.jobTitle
+        }
         dto.role?.let {
             domain.role = dto.role
         }
@@ -48,7 +52,7 @@ class UserService (
             domain.personalLeaveQuota = dto.personalLeaveQuota
         }
         dto.supervisorId?.let {
-            domain.supervisorId = getUserById(dto.supervisorId) ?: throw IllegalStateException("User is not exist.")
+            domain.supervisor = getUserById(dto.supervisorId) ?: throw IllegalStateException("User does not exist.")
         }
 
         return userRepository.save(domain)
@@ -60,4 +64,13 @@ class UserService (
         return userRepository.delete(user)
     }
 
+    fun updateUserQuota(user: User, leaveType: LeaveType, supervisorComment: String) {
+        logger.debug("updateUserQuota")
+        when (leaveType) {
+            LeaveType.VACATION -> userRepository.updateVacationQuota()
+            LeaveType.PERSONAL -> userRepository.updatePersonalQuota()
+            LeaveType.SICK -> userRepository.updateSickQuota()
+            LeaveType.WITHOUT_PAY -> {  }
+        }
+    }
 }

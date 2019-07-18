@@ -15,11 +15,12 @@ class UserAssembler {
         domain.id = dto.id
         domain.firstName = dto.firstName
         domain.lastName = dto.lastName
+        domain.jobTitle = dto.jobTitle
         domain.role = dto.role
         domain.vacationLeaveQuota = dto.vacationLeaveQuota
         domain.sickLeaveQuota = dto.sickLeaveQuota
         domain.personalLeaveQuota = dto.personalLeaveQuota
-        dto.supervisorId?.let { domain.supervisorId = userService.getUserById(it) }
+        dto.supervisorId?.let { domain.supervisor = userService.getUserById(it) }
         return domain
     }
 
@@ -28,11 +29,12 @@ class UserAssembler {
         dto.id = domain.id
         dto.firstName = domain.firstName
         dto.lastName = domain.lastName
+        dto.jobTitle = domain.jobTitle
         dto.role = domain.role
         dto.vacationLeaveQuota = domain.vacationLeaveQuota
         dto.sickLeaveQuota = domain.sickLeaveQuota
         dto.personalLeaveQuota = domain.personalLeaveQuota
-        domain.supervisorId?.let { dto.supervisorId = it.id }
+        domain.supervisor?.let { dto.supervisorId = it.id }
         return dto
     }
 }

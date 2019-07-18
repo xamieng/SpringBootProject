@@ -17,6 +17,7 @@ class User {
     var id: Int? = null
     var firstName: String? = null
     var lastName: String? = null
+    var jobTitle: String? = null
     var role: UserRole? = null
     var vacationLeaveQuota: Double? = null
     var sickLeaveQuota: Double? = null
@@ -24,5 +25,5 @@ class User {
 
     @ManyToOne
     @JoinColumn(name="supervisorId")
-    var supervisorId: User? = null
+    var supervisor: User? = null
 }

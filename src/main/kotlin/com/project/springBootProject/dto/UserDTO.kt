@@ -6,6 +6,7 @@ class UserDTO {
     var id: Int? = null
     var firstName: String? = null
     var lastName: String? = null
+    var jobTitle: String? = null
     var role: UserRole? = null
     var vacationLeaveQuota: Double? = null
     var sickLeaveQuota: Double? = null
