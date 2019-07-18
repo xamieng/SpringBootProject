@@ -6,6 +6,8 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
@@ -18,4 +20,8 @@ class LeaveDetail {
     var endDate: LocalDate? = null
     var status: LeaveStatus? = null
     var totalCount: Double? = null
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    var user: User? = null
 }
