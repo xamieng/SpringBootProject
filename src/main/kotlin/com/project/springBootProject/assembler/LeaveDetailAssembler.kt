@@ -14,6 +14,9 @@ class LeaveDetailAssembler {
     @Inject
     private lateinit var userService: UserService
 
+    @Inject
+    private lateinit var userAssembler: UserAssembler
+
     fun assembleDomain(createDTO: CreateLeaveDetailDTO, newStatus: LeaveStatus): LeaveDetail {
         return LeaveDetail().apply {
             startDate = createDTO.startDate
@@ -27,12 +30,13 @@ class LeaveDetailAssembler {
 
     fun assembleDTO(domain: LeaveDetail): LeaveDetailDTO {
         val dto = LeaveDetailDTO()
-        dto.id = dto.id
-        dto.startDate = dto.startDate
-        dto.endDate = dto.endDate
-        dto.status = dto.status
-        dto.totalCount = dto.totalCount
-        dto.comment = dto.comment
+        dto.id = domain.id
+        dto.startDate = domain.startDate
+        dto.endDate = domain.endDate
+        dto.status = domain.status
+        dto.totalCount = domain.totalCount
+        dto.comment = domain.comment
+        domain.user?.let { dto.user = userAssembler.assembleDTO(it) }
         return dto
     }
 }
