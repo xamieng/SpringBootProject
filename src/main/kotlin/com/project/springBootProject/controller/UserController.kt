@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -44,12 +45,28 @@ class UserController(
         return ResponseEntity.ok(userAssembler.assembleDTO(result))
     }
 
+//    @GetMapping
+//    @Transactional(readOnly = true)
+//    fun getAllUser(): ResponseEntity<List<UserDTO>> {
+//        logger.info("REST request to get all user")
+//        val users = userService.getAllUser()
+//        return ResponseEntity.ok(users.map { userAssembler.assembleDTO(it) })
+//    }
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     fun getUser(@PathVariable id: Int): ResponseEntity<UserDTO> {
         logger.info("REST request to get user: id=$id")
         val user = userService.getUserById(id) ?: throw IllegalStateException("User must not be null")
+        val result = userAssembler.assembleDTO(user)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping
+    @Transactional(readOnly = true)
+    fun getUserByFirstName(@RequestParam firstName: String): ResponseEntity<UserDTO> {
+        logger.info("REST request to get user by firstName: $firstName")
+        val user = userService.getUserByFirstName(firstName) ?: throw IllegalStateException("User must not be null")
         val result = userAssembler.assembleDTO(user)
         return ResponseEntity.ok(result)
     }

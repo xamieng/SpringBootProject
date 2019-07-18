@@ -21,10 +21,20 @@ class UserService (
         return userRepository.save(domain)
     }
 
+    fun getAllUser(): List<User> {
+        logger.debug("getAllUser")
+        return userRepository.findAll().toMutableList()
+    }
+
     fun getUserById(id: Int?): User? {
         logger.debug("getUserById: $id")
         if (id == null) throw IllegalArgumentException("Id must not be null.")
         return userRepository.findOneById(id)
+    }
+
+    fun getUserByFirstName(firstName: String): User? {
+        logger.debug("getUserByFirstName: $firstName")
+        return userRepository.findOneByFirstName(firstName)
     }
 
     fun updateUser(dto: UserDTO, domain: User): User {
@@ -64,12 +74,13 @@ class UserService (
         return userRepository.delete(user)
     }
 
-    fun updateUserQuota(user: User, leaveType: LeaveType, supervisorComment: String) {
+    fun updateUserQuota(user: User, leaveType: LeaveType, totalLeave: Double) {
         logger.debug("updateUserQuota")
+        val userId = user.id ?: throw IllegalStateException("UserId does not exist.")
         when (leaveType) {
-            LeaveType.VACATION -> userRepository.updateVacationQuota()
-            LeaveType.PERSONAL -> userRepository.updatePersonalQuota()
-            LeaveType.SICK -> userRepository.updateSickQuota()
+            LeaveType.VACATION -> userRepository.updateVacationQuota(userId, totalLeave)
+            LeaveType.PERSONAL -> userRepository.updatePersonalQuota(userId, totalLeave)
+            LeaveType.SICK -> userRepository.updateSickQuota(userId, totalLeave)
             LeaveType.WITHOUT_PAY -> {  }
         }
     }

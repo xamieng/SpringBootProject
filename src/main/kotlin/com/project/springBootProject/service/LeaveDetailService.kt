@@ -89,12 +89,13 @@ class LeaveDetailService (
         val leaveDetail = leaveDetailRepository.findOneById(id)
         val user = leaveDetail?.user ?: throw IllegalStateException("User must exist.")
         val leaveType = leaveDetail.leaveType ?: throw IllegalStateException("Current leaveType must exist.")
+        val totalLeave = leaveDetail.totalCount ?: throw IllegalStateException("Current totalCount must exist.")
 
         if (newStatus == LeaveStatus.ACCEPTED) {
             leaveDetail.status = LeaveStatus.ACCEPTED
             leaveDetail.supervisorComment = supervisorComment
             leaveDetailRepository.save(leaveDetail)
-            userService.updateUserQuota(user, leaveType, supervisorComment)
+            userService.updateUserQuota(user, leaveType, totalLeave)
         }
     }
 
