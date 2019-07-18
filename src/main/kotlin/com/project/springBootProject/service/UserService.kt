@@ -1,6 +1,5 @@
 package com.project.springBootProject.service
 
-import com.project.springBootProject.assembler.UserAssembler
 import com.project.springBootProject.domain.User
 import com.project.springBootProject.dto.UserDTO
 import com.project.springBootProject.repository.UserRepository
@@ -10,8 +9,7 @@ import java.lang.IllegalStateException
 
 @Service
 class UserService (
-        private val userRepository: UserRepository,
-        private val userAssembler: UserAssembler
+        private val userRepository: UserRepository
 
 ) {
 

@@ -20,6 +20,7 @@ class LeaveDetail {
     var endDate: LocalDate? = null
     var status: LeaveStatus? = null
     var totalCount: Double? = null
+    var comment: String? = null
 
     @ManyToOne
     @JoinColumn(name="user_id")

@@ -26,7 +26,7 @@ class UserController(
     private val logger = LoggerFactory.getLogger(UserController::class.java)
 
     @PostMapping
-    @Transactional(readOnly = true)
+    @Transactional
     fun createUser(@RequestBody dto: UserDTO): ResponseEntity<UserDTO> {
         logger.info("REST request to create user: $dto")
         val domain = userAssembler.assembleDomain(dto)
@@ -36,7 +36,7 @@ class UserController(
     }
 
     @PutMapping("/{id}")
-    @Transactional(readOnly = true)
+    @Transactional
     fun updateUser(@RequestBody dto: UserDTO, @PathVariable id: Int): ResponseEntity<UserDTO> {
         logger.info("REST request to create user: $dto")
         val domain = userService.getUserById(id) ?: throw IllegalArgumentException("User is not exist.")
@@ -55,10 +55,10 @@ class UserController(
     }
 
     @DeleteMapping("/{id}")
-    @Transactional(readOnly = true)
+    @Transactional
     fun deleteUser(@PathVariable id: Int): ResponseEntity<HttpStatus> {
         logger.info("REST request to get user: id=$id")
-        val user = userService.deleteUserById(id)
+        userService.deleteUserById(id)
         return ResponseEntity.ok(HttpStatus.OK)
     }
 }

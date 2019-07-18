@@ -12,25 +12,27 @@ class UserAssembler {
 
     fun assembleDomain(dto: UserDTO): User {
         val domain = User()
+        domain.id = dto.id
         domain.firstName = dto.firstName
         domain.lastName = dto.lastName
         domain.role = dto.role
         domain.vacationLeaveQuota = dto.vacationLeaveQuota
         domain.sickLeaveQuota = dto.sickLeaveQuota
         domain.personalLeaveQuota = dto.personalLeaveQuota
-        domain.supervisorId = userService.getUserById(dto.supervisorId)
+        dto.supervisorId?.let { domain.supervisorId = userService.getUserById(it) }
         return domain
     }
 
     fun assembleDTO(domain: User): UserDTO {
         val dto = UserDTO()
-        dto.firstName = dto.firstName
-        dto.lastName = dto.lastName
-        dto.role = dto.role
-        dto.vacationLeaveQuota = dto.vacationLeaveQuota
-        dto.sickLeaveQuota = dto.sickLeaveQuota
-        dto.personalLeaveQuota = dto.personalLeaveQuota
-        dto.supervisorId = domain.id ?: throw IllegalStateException("User id must not be null.")
+        dto.id = domain.id
+        dto.firstName = domain.firstName
+        dto.lastName = domain.lastName
+        dto.role = domain.role
+        dto.vacationLeaveQuota = domain.vacationLeaveQuota
+        dto.sickLeaveQuota = domain.sickLeaveQuota
+        dto.personalLeaveQuota = domain.personalLeaveQuota
+        domain.supervisorId?.let { dto.supervisorId = it.id }
         return dto
     }
 }
