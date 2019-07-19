@@ -91,11 +91,15 @@ class LeaveDetailService (
         val leaveType = leaveDetail.leaveType ?: throw IllegalStateException("Current leaveType must exist.")
         val totalLeave = leaveDetail.totalCount ?: throw IllegalStateException("Current totalCount must exist.")
 
-        if (newStatus == LeaveStatus.ACCEPTED) {
+        if (leaveDetail.status == LeaveStatus.PENDING && newStatus == LeaveStatus.ACCEPTED) {
             leaveDetail.status = LeaveStatus.ACCEPTED
             leaveDetail.supervisorComment = supervisorComment
             leaveDetailRepository.save(leaveDetail)
             userService.updateUserQuota(user, leaveType, totalLeave)
+        } else if (leaveDetail.status == LeaveStatus.PENDING && newStatus == LeaveStatus.REJECTED) {
+            leaveDetail.status = LeaveStatus.REJECTED
+            leaveDetail.supervisorComment = supervisorComment
+            leaveDetailRepository.save(leaveDetail)
         }
     }
 
